@@ -59,22 +59,22 @@ export function ExtractedDataPanel({ data }: ExtractedDataPanelProps) {
       </CardHeader>
       <CardContent>
         {dataEntries.length > 0 ? (
-          <div className="space-y-3">
+          <div className="space-y-3 max-h-[400px] overflow-y-auto">
             {dataEntries.map(([key, value]) => {
               const Icon = getFieldIcon(key)
               return (
                 <div key={key} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
-                  <div className="flex items-center space-x-3">
-                    <div className="p-1.5 bg-white rounded-md">
+                  <div className="flex items-center space-x-3 min-w-0 flex-1">
+                    <div className="p-1.5 bg-white rounded-md flex-shrink-0">
                       <Icon className="h-4 w-4 text-slate-600" />
                     </div>
-                    <div>
-                      <p className="text-sm font-medium text-slate-900">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-medium text-slate-900 truncate">
                         {formatFieldName(key)}
                       </p>
                     </div>
                   </div>
-                  <Badge variant="secondary" className="font-mono text-xs">
+                  <Badge variant="secondary" className="font-mono text-xs flex-shrink-0 ml-2">
                     {formatValue(value)}
                   </Badge>
                 </div>

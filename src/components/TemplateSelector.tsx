@@ -69,13 +69,13 @@ export function TemplateSelector({ selectedTemplate, onTemplateChange }: Templat
               }`}
               onClick={() => onTemplateChange(template.id)}
             >
-              <div className="flex items-start space-x-3 w-full">
-                <div className={`p-2 rounded-lg ${template.color}`}>
+              <div className="flex items-start space-x-3 w-full min-w-0">
+                <div className={`p-2 rounded-lg flex-shrink-0 ${template.color}`}>
                   <Icon className="h-4 w-4" />
                 </div>
-                <div className="text-left flex-1">
-                  <div className="font-medium text-sm">{template.name}</div>
-                  <div className={`text-xs mt-1 ${
+                <div className="text-left flex-1 min-w-0">
+                  <div className="font-medium text-sm truncate">{template.name}</div>
+                  <div className={`text-xs mt-1 leading-tight ${
                     isSelected ? 'text-blue-100' : 'text-slate-600'
                   }`}>
                     {template.description}

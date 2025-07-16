@@ -61,6 +61,10 @@ function App() {
     setIsProcessing(false)
   }
 
+  const handleDeleteJob = (jobId: string) => {
+    setProcessingJobs(prev => prev.filter(job => job.id !== jobId))
+  }
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
@@ -84,9 +88,9 @@ function App() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto p-6">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 min-h-0">
           {/* Left Column - Input and Template Selection */}
-          <div className="lg:col-span-1 space-y-6">
+          <div className="lg:col-span-1 space-y-6 min-h-0">
             <DataInputZone 
               onProcessingStart={handleProcessingStart}
               onDataExtracted={handleDataExtracted}
@@ -99,18 +103,18 @@ function App() {
               onTemplateChange={setSelectedTemplate}
             />
 
-            <ProcessingHistory jobs={processingJobs} />
+            <ProcessingHistory jobs={processingJobs} onDeleteJob={handleDeleteJob} />
           </div>
 
           {/* Middle Column - Processing Status and Extracted Data */}
-          <div className="lg:col-span-1 space-y-6">
+          <div className="lg:col-span-1 space-y-6 min-h-0">
             <ProcessingStatus isProcessing={isProcessing} />
             
             <ExtractedDataPanel data={extractedData} />
           </div>
 
           {/* Right Column - Template Preview */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 min-h-0">
             <TemplatePreview 
               templateType={selectedTemplate}
               data={extractedData}

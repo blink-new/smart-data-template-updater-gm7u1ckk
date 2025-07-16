@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Upload, FileText, Image, Table, Loader2, AlertTriangle, CheckCircle, Info } from 'lucide-react'
+import { Upload, FileText, Image, Table, Loader2, AlertTriangle, CheckCircle, Info, Copy, Lightbulb } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
 import { ExtractedData } from '@/App'
 import { validateExtractedData, enhancedDataExtraction, ValidationResult } from '@/utils/dataValidation'
@@ -134,6 +134,78 @@ export function DataInputZone({
     simulateDataExtraction(textInput)
   }
 
+  const getSampleData = () => {
+    switch (selectedTemplate) {
+      case 'comprehensive-financial':
+        return `Revenue: $500,000
+Cost of Goods Sold: $200,000
+Operating Expenses: $150,000
+Depreciation & Amortization: $25,000
+Interest Expense: $10,000
+Income Tax Expense: $23,000
+Cash and Cash Equivalents: $75,000
+Accounts Receivable: $45,000
+Inventory: $30,000
+Property, Plant & Equipment: $200,000
+Intangible Assets: $15,000
+Accounts Payable: $35,000
+Short-term Debt: $20,000
+Long-term Debt: $100,000
+Share Capital: $150,000
+Retained Earnings: $60,000
+Capital Expenditures: $40,000
+Working Capital Change: -$5,000
+Debt Proceeds: $25,000
+Debt Repayments: $15,000
+Dividends Paid: $8,000
+Beginning Cash: $70,000`
+      case 'financial-statement':
+        return `Revenue: $500,000
+Cost of Goods Sold: $200,000
+Operating Expenses: $150,000
+Net Income: $150,000`
+      case 'balance-sheet':
+        return `Current Assets: $150,000
+Fixed Assets: $300,000
+Current Liabilities: $75,000
+Long-term Debt: $125,000
+Equity: $250,000`
+      case 'invoice':
+        return `Invoice Number: INV-2024-001
+Date: 2024-01-15
+Client: ABC Corporation
+Amount: $5,500`
+      case 'employee-report':
+        return `Employee Name: John Smith
+Department: Engineering
+Position: Senior Software Developer
+Performance Score: 4.5
+Salary: $95,000
+Start Date: 2022-03-15`
+      default:
+        return `Revenue: $500,000
+Cost of Goods Sold: $200,000
+Operating Expenses: $150,000
+Net Income: $150,000`
+    }
+  }
+
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text)
+      toast({
+        title: "Copied to clipboard",
+        description: "Sample data has been copied to your clipboard",
+      })
+    } catch (error) {
+      toast({
+        title: "Copy failed",
+        description: "Failed to copy to clipboard",
+        variant: "destructive"
+      })
+    }
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -242,6 +314,28 @@ export function DataInputZone({
           </TabsContent>
           
           <TabsContent value="text" className="space-y-4">
+            {/* Sample Data Hint */}
+            <Alert>
+              <Lightbulb className="h-4 w-4" />
+              <AlertDescription>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium">Need sample data? Try this format:</span>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => copyToClipboard(getSampleData())}
+                    className="h-6 px-2 text-xs"
+                  >
+                    <Copy className="h-3 w-3 mr-1" />
+                    Copy Sample
+                  </Button>
+                </div>
+                <div className="mt-2 p-2 bg-slate-50 rounded text-xs font-mono whitespace-pre-line max-h-32 overflow-y-auto">
+                  {getSampleData()}
+                </div>
+              </AlertDescription>
+            </Alert>
+
             <Textarea
               placeholder="Paste your data here... (e.g., Revenue: $100,000, COGS: $50,000, Expenses: $30,000)"
               value={textInput}

@@ -2,14 +2,15 @@ import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { History, FileText, CheckCircle, XCircle, Clock, Eye } from 'lucide-react'
+import { History, FileText, CheckCircle, XCircle, Clock, Eye, Trash2 } from 'lucide-react'
 import { ProcessingJob } from '@/App'
 
 interface ProcessingHistoryProps {
   jobs: ProcessingJob[]
+  onDeleteJob?: (jobId: string) => void
 }
 
-export function ProcessingHistory({ jobs }: ProcessingHistoryProps) {
+export function ProcessingHistory({ jobs, onDeleteJob }: ProcessingHistoryProps) {
   const getStatusIcon = (status: ProcessingJob['status']) => {
     switch (status) {
       case 'completed':
@@ -89,11 +90,23 @@ export function ProcessingHistory({ jobs }: ProcessingHistoryProps) {
                 </div>
                 <div className="flex items-center space-x-2 flex-shrink-0">
                   {getStatusBadge(job.status)}
-                  {job.status === 'completed' && job.extractedData && (
-                    <Button size="sm" variant="ghost" className="h-6 w-6 p-0">
-                      <Eye className="h-3 w-3" />
-                    </Button>
-                  )}
+                  <div className="flex items-center space-x-1">
+                    {job.status === 'completed' && job.extractedData && (
+                      <Button size="sm" variant="ghost" className="h-6 w-6 p-0">
+                        <Eye className="h-3 w-3" />
+                      </Button>
+                    )}
+                    {onDeleteJob && (
+                      <Button 
+                        size="sm" 
+                        variant="ghost" 
+                        className="h-6 w-6 p-0 text-red-500 hover:text-red-700 hover:bg-red-50"
+                        onClick={() => onDeleteJob(job.id)}
+                      >
+                        <Trash2 className="h-3 w-3" />
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}

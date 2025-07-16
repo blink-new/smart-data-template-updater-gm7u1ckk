@@ -68,23 +68,23 @@ export function TemplatePreview({ templateType, data }: TemplatePreviewProps) {
           </div>
           <div className="flex justify-between items-center py-2 border-b">
             <span className="font-medium">Depreciation & Amortization</span>
-            <span className="font-mono">-${(data.depreciation || 10000).toLocaleString()}</span>
+            <span className="font-mono">-${(data.depreciation || 0).toLocaleString()}</span>
           </div>
           <div className="flex justify-between items-center py-2 border-b bg-slate-50 px-2 rounded">
             <span className="font-semibold">Operating Income</span>
-            <span className="font-mono font-semibold">${(((data.revenue || 0) - (data.cogs || 0) - (data.expenses || 0) - (data.depreciation || 10000))).toLocaleString()}</span>
+            <span className="font-mono font-semibold">${(((data.revenue || 0) - (data.cogs || 0) - (data.expenses || 0) - (data.depreciation || 0))).toLocaleString()}</span>
           </div>
           <div className="flex justify-between items-center py-2 border-b">
             <span className="font-medium">Interest Expense</span>
-            <span className="font-mono">-${(data.interestExpense || 5000).toLocaleString()}</span>
+            <span className="font-mono">-${(data.interestExpense || 0).toLocaleString()}</span>
           </div>
           <div className="flex justify-between items-center py-2 border-b">
             <span className="font-medium">Income Tax Expense</span>
-            <span className="font-mono">-${(data.taxExpense || 8000).toLocaleString()}</span>
+            <span className="font-mono">-${(data.taxExpense || 0).toLocaleString()}</span>
           </div>
           <div className="flex justify-between items-center py-3 border-2 border-blue-200 bg-blue-50 px-2 rounded">
             <span className="font-bold text-blue-900">Net Income</span>
-            <span className="font-mono font-bold text-blue-900">${(data.netIncome || (((data.revenue || 0) - (data.cogs || 0) - (data.expenses || 0) - (data.depreciation || 10000) - (data.interestExpense || 5000) - (data.taxExpense || 8000)))).toLocaleString()}</span>
+            <span className="font-mono font-bold text-blue-900">${(data.netIncome || (((data.revenue || 0) - (data.cogs || 0) - (data.expenses || 0) - (data.depreciation || 0) - (data.interestExpense || 0) - (data.taxExpense || 0)))).toLocaleString()}</span>
           </div>
         </div>
       </div>
@@ -103,33 +103,33 @@ export function TemplatePreview({ templateType, data }: TemplatePreviewProps) {
               <h4 className="font-medium text-slate-700 text-sm">Current Assets:</h4>
               <div className="flex justify-between pl-4">
                 <span className="text-sm">Cash and Cash Equivalents</span>
-                <span className="font-mono text-sm">${(data.cash || 25000).toLocaleString()}</span>
+                <span className="font-mono text-sm">${(data.cash || 0).toLocaleString()}</span>
               </div>
               <div className="flex justify-between pl-4">
                 <span className="text-sm">Accounts Receivable</span>
-                <span className="font-mono text-sm">${(data.accountsReceivable || 15000).toLocaleString()}</span>
+                <span className="font-mono text-sm">${(data.accountsReceivable || 0).toLocaleString()}</span>
               </div>
               <div className="flex justify-between pl-4">
                 <span className="text-sm">Inventory</span>
-                <span className="font-mono text-sm">${(data.inventory || 10000).toLocaleString()}</span>
+                <span className="font-mono text-sm">${(data.inventory || 0).toLocaleString()}</span>
               </div>
               <div className="flex justify-between font-medium border-t pt-2">
                 <span className="text-sm">Total Current Assets</span>
-                <span className="font-mono text-sm">${((data.cash || 25000) + (data.accountsReceivable || 15000) + (data.inventory || 10000)).toLocaleString()}</span>
+                <span className="font-mono text-sm">${((data.cash || 0) + (data.accountsReceivable || 0) + (data.inventory || 0)).toLocaleString()}</span>
               </div>
               
               <h4 className="font-medium text-slate-700 text-sm pt-3">Non-Current Assets:</h4>
               <div className="flex justify-between pl-4">
                 <span className="text-sm">Property, Plant & Equipment</span>
-                <span className="font-mono text-sm">${(data.ppe || 100000).toLocaleString()}</span>
+                <span className="font-mono text-sm">${(data.ppe || 0).toLocaleString()}</span>
               </div>
               <div className="flex justify-between pl-4">
                 <span className="text-sm">Intangible Assets</span>
-                <span className="font-mono text-sm">${(data.intangibleAssets || 5000).toLocaleString()}</span>
+                <span className="font-mono text-sm">${(data.intangibleAssets || 0).toLocaleString()}</span>
               </div>
               <div className="flex justify-between font-semibold border-t-2 border-slate-900 pt-2">
                 <span className="text-sm">TOTAL ASSETS</span>
-                <span className="font-mono text-sm">${((data.cash || 25000) + (data.accountsReceivable || 15000) + (data.inventory || 10000) + (data.ppe || 100000) + (data.intangibleAssets || 5000)).toLocaleString()}</span>
+                <span className="font-mono text-sm">${((data.cash || 0) + (data.accountsReceivable || 0) + (data.inventory || 0) + (data.ppe || 0) + (data.intangibleAssets || 0)).toLocaleString()}</span>
               </div>
             </div>
           </div>
@@ -140,35 +140,35 @@ export function TemplatePreview({ templateType, data }: TemplatePreviewProps) {
               <h4 className="font-medium text-slate-700 text-sm">Current Liabilities:</h4>
               <div className="flex justify-between pl-4">
                 <span className="text-sm">Accounts Payable</span>
-                <span className="font-mono text-sm">${(data.accountsPayable || 12000).toLocaleString()}</span>
+                <span className="font-mono text-sm">${(data.accountsPayable || 0).toLocaleString()}</span>
               </div>
               <div className="flex justify-between pl-4">
                 <span className="text-sm">Short-term Debt</span>
-                <span className="font-mono text-sm">${(data.shortTermDebt || 8000).toLocaleString()}</span>
+                <span className="font-mono text-sm">${(data.shortTermDebt || 0).toLocaleString()}</span>
               </div>
               <div className="flex justify-between font-medium border-t pt-2">
                 <span className="text-sm">Total Current Liabilities</span>
-                <span className="font-mono text-sm">${((data.accountsPayable || 12000) + (data.shortTermDebt || 8000)).toLocaleString()}</span>
+                <span className="font-mono text-sm">${((data.accountsPayable || 0) + (data.shortTermDebt || 0)).toLocaleString()}</span>
               </div>
               
               <h4 className="font-medium text-slate-700 text-sm pt-3">Non-Current Liabilities:</h4>
               <div className="flex justify-between pl-4">
                 <span className="text-sm">Long-term Debt</span>
-                <span className="font-mono text-sm">${(data.longTermDebt || 50000).toLocaleString()}</span>
+                <span className="font-mono text-sm">${(data.longTermDebt || 0).toLocaleString()}</span>
               </div>
               
               <h4 className="font-medium text-slate-700 text-sm pt-3">Equity:</h4>
               <div className="flex justify-between pl-4">
                 <span className="text-sm">Share Capital</span>
-                <span className="font-mono text-sm">${(data.shareCapital || 50000).toLocaleString()}</span>
+                <span className="font-mono text-sm">${(data.shareCapital || 0).toLocaleString()}</span>
               </div>
               <div className="flex justify-between pl-4">
                 <span className="text-sm">Retained Earnings</span>
-                <span className="font-mono text-sm">${(data.retainedEarnings || 25000).toLocaleString()}</span>
+                <span className="font-mono text-sm">${(data.retainedEarnings || 0).toLocaleString()}</span>
               </div>
               <div className="flex justify-between font-semibold border-t-2 border-slate-900 pt-2">
                 <span className="text-sm">TOTAL LIAB. & EQUITY</span>
-                <span className="font-mono text-sm">${((data.accountsPayable || 12000) + (data.shortTermDebt || 8000) + (data.longTermDebt || 50000) + (data.shareCapital || 50000) + (data.retainedEarnings || 25000)).toLocaleString()}</span>
+                <span className="font-mono text-sm">${((data.accountsPayable || 0) + (data.shortTermDebt || 0) + (data.longTermDebt || 0) + (data.shareCapital || 0) + (data.retainedEarnings || 0)).toLocaleString()}</span>
               </div>
             </div>
           </div>
@@ -188,19 +188,19 @@ export function TemplatePreview({ templateType, data }: TemplatePreviewProps) {
             <div className="space-y-1 pl-4">
               <div className="flex justify-between">
                 <span className="text-sm">Net Income</span>
-                <span className="font-mono text-sm">${(data.netIncome || 20000).toLocaleString()}</span>
+                <span className="font-mono text-sm">${(data.netIncome || 0).toLocaleString()}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm">Depreciation & Amortization</span>
-                <span className="font-mono text-sm">${(data.depreciation || 10000).toLocaleString()}</span>
+                <span className="font-mono text-sm">${(data.depreciation || 0).toLocaleString()}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm">Changes in Working Capital</span>
-                <span className="font-mono text-sm">${(data.workingCapitalChange || -5000).toLocaleString()}</span>
+                <span className="font-mono text-sm">${(data.workingCapitalChange || 0).toLocaleString()}</span>
               </div>
               <div className="flex justify-between font-medium border-t pt-1">
                 <span className="text-sm">Net Cash from Operating Activities</span>
-                <span className="font-mono text-sm">${((data.netIncome || 20000) + (data.depreciation || 10000) + (data.workingCapitalChange || -5000)).toLocaleString()}</span>
+                <span className="font-mono text-sm">${((data.netIncome || 0) + (data.depreciation || 0) + (data.workingCapitalChange || 0)).toLocaleString()}</span>
               </div>
             </div>
           </div>
@@ -210,11 +210,11 @@ export function TemplatePreview({ templateType, data }: TemplatePreviewProps) {
             <div className="space-y-1 pl-4">
               <div className="flex justify-between">
                 <span className="text-sm">Capital Expenditures</span>
-                <span className="font-mono text-sm">-${(data.capex || 15000).toLocaleString()}</span>
+                <span className="font-mono text-sm">-${(data.capex || 0).toLocaleString()}</span>
               </div>
               <div className="flex justify-between font-medium border-t pt-1">
                 <span className="text-sm">Net Cash from Investing Activities</span>
-                <span className="font-mono text-sm">-${(data.capex || 15000).toLocaleString()}</span>
+                <span className="font-mono text-sm">-${(data.capex || 0).toLocaleString()}</span>
               </div>
             </div>
           </div>
@@ -228,15 +228,15 @@ export function TemplatePreview({ templateType, data }: TemplatePreviewProps) {
               </div>
               <div className="flex justify-between">
                 <span className="text-sm">Debt Repayments</span>
-                <span className="font-mono text-sm">-${(data.debtRepayments || 5000).toLocaleString()}</span>
+                <span className="font-mono text-sm">-${(data.debtRepayments || 0).toLocaleString()}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm">Dividends Paid</span>
-                <span className="font-mono text-sm">-${(data.dividendsPaid || 2000).toLocaleString()}</span>
+                <span className="font-mono text-sm">-${(data.dividendsPaid || 0).toLocaleString()}</span>
               </div>
               <div className="flex justify-between font-medium border-t pt-1">
                 <span className="text-sm">Net Cash from Financing Activities</span>
-                <span className="font-mono text-sm">${((data.debtProceeds || 0) - (data.debtRepayments || 5000) - (data.dividendsPaid || 2000)).toLocaleString()}</span>
+                <span className="font-mono text-sm">${((data.debtProceeds || 0) - (data.debtRepayments || 0) - (data.dividendsPaid || 0)).toLocaleString()}</span>
               </div>
             </div>
           </div>
@@ -244,15 +244,15 @@ export function TemplatePreview({ templateType, data }: TemplatePreviewProps) {
           <div className="border-t-2 border-slate-900 pt-3">
             <div className="flex justify-between font-semibold">
               <span>Net Change in Cash</span>
-              <span className="font-mono">${(((data.netIncome || 20000) + (data.depreciation || 10000) + (data.workingCapitalChange || -5000)) - (data.capex || 15000) + ((data.debtProceeds || 0) - (data.debtRepayments || 5000) - (data.dividendsPaid || 2000))).toLocaleString()}</span>
+              <span className="font-mono">${(((data.netIncome || 0) + (data.depreciation || 0) + (data.workingCapitalChange || 0)) - (data.capex || 0) + ((data.debtProceeds || 0) - (data.debtRepayments || 0) - (data.dividendsPaid || 0))).toLocaleString()}</span>
             </div>
             <div className="flex justify-between">
               <span>Cash at Beginning of Year</span>
-              <span className="font-mono">${(data.beginningCash || 20000).toLocaleString()}</span>
+              <span className="font-mono">${(data.beginningCash || 0).toLocaleString()}</span>
             </div>
             <div className="flex justify-between font-bold border-t pt-2">
               <span>Cash at End of Year</span>
-              <span className="font-mono">${((data.beginningCash || 20000) + (((data.netIncome || 20000) + (data.depreciation || 10000) + (data.workingCapitalChange || -5000)) - (data.capex || 15000) + ((data.debtProceeds || 0) - (data.debtRepayments || 5000) - (data.dividendsPaid || 2000)))).toLocaleString()}</span>
+              <span className="font-mono">${((data.beginningCash || 0) + (((data.netIncome || 0) + (data.depreciation || 0) + (data.workingCapitalChange || 0)) - (data.capex || 0) + ((data.debtProceeds || 0) - (data.debtRepayments || 0) - (data.dividendsPaid || 0)))).toLocaleString()}</span>
             </div>
           </div>
         </div>
@@ -432,15 +432,15 @@ export function TemplatePreview({ templateType, data }: TemplatePreviewProps) {
           <div className="space-y-2">
             <div className="flex justify-between">
               <span>Current Assets</span>
-              <span className="font-mono">${(data.currentAssets || 50000).toLocaleString()}</span>
+              <span className="font-mono">${(data.currentAssets || 0).toLocaleString()}</span>
             </div>
             <div className="flex justify-between">
               <span>Fixed Assets</span>
-              <span className="font-mono">${(data.fixedAssets || 100000).toLocaleString()}</span>
+              <span className="font-mono">${(data.fixedAssets || 0).toLocaleString()}</span>
             </div>
             <div className="flex justify-between font-semibold border-t pt-2">
               <span>Total Assets</span>
-              <span className="font-mono">${((data.currentAssets || 50000) + (data.fixedAssets || 100000)).toLocaleString()}</span>
+              <span className="font-mono">${((data.currentAssets || 0) + (data.fixedAssets || 0)).toLocaleString()}</span>
             </div>
           </div>
         </div>
@@ -450,19 +450,19 @@ export function TemplatePreview({ templateType, data }: TemplatePreviewProps) {
           <div className="space-y-2">
             <div className="flex justify-between">
               <span>Current Liabilities</span>
-              <span className="font-mono">${(data.currentLiabilities || 20000).toLocaleString()}</span>
+              <span className="font-mono">${(data.currentLiabilities || 0).toLocaleString()}</span>
             </div>
             <div className="flex justify-between">
               <span>Long-term Debt</span>
-              <span className="font-mono">${(data.longTermDebt || 50000).toLocaleString()}</span>
+              <span className="font-mono">${(data.longTermDebt || 0).toLocaleString()}</span>
             </div>
             <div className="flex justify-between">
               <span>Equity</span>
-              <span className="font-mono">${(data.equity || 80000).toLocaleString()}</span>
+              <span className="font-mono">${(data.equity || 0).toLocaleString()}</span>
             </div>
             <div className="flex justify-between font-semibold border-t pt-2">
               <span>Total Liab. & Equity</span>
-              <span className="font-mono">${((data.currentLiabilities || 20000) + (data.longTermDebt || 50000) + (data.equity || 80000)).toLocaleString()}</span>
+              <span className="font-mono">${((data.currentLiabilities || 0) + (data.longTermDebt || 0) + (data.equity || 0)).toLocaleString()}</span>
             </div>
           </div>
         </div>
@@ -481,29 +481,29 @@ export function TemplatePreview({ templateType, data }: TemplatePreviewProps) {
         <div className="space-y-3">
           <div>
             <label className="text-sm font-medium text-slate-600">Employee Name</label>
-            <p className="font-medium">{data.employeeName || 'John Doe'}</p>
+            <p className="font-medium">{data.employeeName || '[Employee Name]'}</p>
           </div>
           <div>
             <label className="text-sm font-medium text-slate-600">Department</label>
-            <p className="font-medium">{data.department || 'Engineering'}</p>
+            <p className="font-medium">{data.department || '[Department]'}</p>
           </div>
           <div>
             <label className="text-sm font-medium text-slate-600">Position</label>
-            <p className="font-medium">{data.position || 'Software Developer'}</p>
+            <p className="font-medium">{data.position || '[Position]'}</p>
           </div>
         </div>
         <div className="space-y-3">
           <div>
             <label className="text-sm font-medium text-slate-600">Performance Score</label>
-            <p className="font-medium">{data.performanceScore || '4.2'}/5.0</p>
+            <p className="font-medium">{data.performanceScore || '0'}/5.0</p>
           </div>
           <div>
             <label className="text-sm font-medium text-slate-600">Salary</label>
-            <p className="font-medium font-mono">${(data.salary || 75000).toLocaleString()}</p>
+            <p className="font-medium font-mono">${(data.salary || 0).toLocaleString()}</p>
           </div>
           <div>
             <label className="text-sm font-medium text-slate-600">Start Date</label>
-            <p className="font-medium">{data.startDate || '2023-01-15'}</p>
+            <p className="font-medium">{data.startDate || '[Start Date]'}</p>
           </div>
         </div>
       </div>
@@ -593,27 +593,13 @@ export function TemplatePreview({ templateType, data }: TemplatePreviewProps) {
         </div>
       </CardHeader>
       <CardContent>
-        <div id="template-preview" className="bg-white border rounded-lg p-6 min-h-[500px] relative">
+        <div id="template-preview" className="bg-white border rounded-lg p-6 min-h-[500px] max-h-[800px] overflow-y-auto relative">
           <div className="mb-4 flex items-center space-x-2">
             <FileText className="h-4 w-4 text-slate-500" />
             <span className="text-sm font-medium text-slate-600">{getTemplateName()}</span>
           </div>
           
           {getTemplateContent()}
-          
-          {!hasData && (
-            <div className="absolute inset-0 bg-white/80 flex items-center justify-center rounded-lg m-6">
-              <div className="text-center">
-                <div className="p-3 bg-slate-100 rounded-full w-fit mx-auto mb-3">
-                  <FileText className="h-6 w-6 text-slate-400" />
-                </div>
-                <p className="text-sm text-slate-600">Template ready for data</p>
-                <p className="text-xs text-slate-500 mt-1">
-                  Upload or paste data to populate this template
-                </p>
-              </div>
-            </div>
-          )}
         </div>
       </CardContent>
     </Card>
