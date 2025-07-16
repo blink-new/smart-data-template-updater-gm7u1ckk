@@ -256,7 +256,7 @@ export function TemplatePreview({ templateType, data }: TemplatePreviewProps) {
         </div>
       </CardHeader>
       <CardContent>
-        <div className="bg-white border rounded-lg p-6 min-h-[500px]">
+        <div className="bg-white border rounded-lg p-6 min-h-[500px] relative">
           <div className="mb-4 flex items-center space-x-2">
             <FileText className="h-4 w-4 text-slate-500" />
             <span className="text-sm font-medium text-slate-600">{getTemplateName()}</span>
@@ -265,7 +265,7 @@ export function TemplatePreview({ templateType, data }: TemplatePreviewProps) {
           {getTemplateContent()}
           
           {!hasData && (
-            <div className="absolute inset-0 bg-white/80 flex items-center justify-center rounded-lg">
+            <div className="absolute inset-0 bg-white/80 flex items-center justify-center rounded-lg m-6">
               <div className="text-center">
                 <div className="p-3 bg-slate-100 rounded-full w-fit mx-auto mb-3">
                   <FileText className="h-6 w-6 text-slate-400" />
