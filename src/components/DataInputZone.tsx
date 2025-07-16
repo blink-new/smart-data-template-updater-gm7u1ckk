@@ -3,9 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Upload, FileText, Image, Table, Loader2 } from 'lucide-react'
+import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Upload, FileText, Image, Table, Loader2, AlertTriangle, CheckCircle, Info } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
 import { ExtractedData } from '@/App'
+import { validateExtractedData, enhancedDataExtraction, ValidationResult } from '@/utils/dataValidation'
 
 interface DataInputZoneProps {
   onProcessingStart: (jobId: string, fileName: string) => void
@@ -23,6 +25,7 @@ export function DataInputZone({
   const [textInput, setTextInput] = useState('')
   const [isDragging, setIsDragging] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
+  const [validationResult, setValidationResult] = useState<ValidationResult | null>(null)
   const { toast } = useToast()
 
   const generateJobId = () => `job_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
@@ -31,48 +34,44 @@ export function DataInputZone({
     const jobId = generateJobId()
     onProcessingStart(jobId, fileName)
     setIsProcessing(true)
+    setValidationResult(null)
 
     try {
       // Simulate AI processing delay
       await new Promise(resolve => setTimeout(resolve, 2000))
 
-      // Mock data extraction based on template type
-      let extractedData: ExtractedData = {}
+      // Use enhanced data extraction
+      const extractedData = enhancedDataExtraction(input, selectedTemplate)
 
-      if (selectedTemplate === 'financial-statement') {
-        // Extract financial data patterns
-        const revenueMatch = input.match(/revenue[:\s]*\$?([0-9,]+)/i)
-        const cogsMatch = input.match(/(?:cogs|cost of goods sold)[:\s]*\$?([0-9,]+)/i)
-        const expensesMatch = input.match(/(?:expenses|operating expenses)[:\s]*\$?([0-9,]+)/i)
-        const netIncomeMatch = input.match(/(?:net income|profit)[:\s]*\$?([0-9,]+)/i)
+      // Validate the extracted data
+      const validation = validateExtractedData(extractedData, selectedTemplate, input)
+      setValidationResult(validation)
 
-        extractedData = {
-          revenue: revenueMatch ? parseInt(revenueMatch[1].replace(/,/g, '')) : 0,
-          cogs: cogsMatch ? parseInt(cogsMatch[1].replace(/,/g, '')) : 0,
-          expenses: expensesMatch ? parseInt(expensesMatch[1].replace(/,/g, '')) : 0,
-          netIncome: netIncomeMatch ? parseInt(netIncomeMatch[1].replace(/,/g, '')) : 0,
-          grossProfit: (revenueMatch && cogsMatch) ? 
-            parseInt(revenueMatch[1].replace(/,/g, '')) - parseInt(cogsMatch[1].replace(/,/g, '')) : 0
-        }
-      } else if (selectedTemplate === 'invoice') {
-        const invoiceNumberMatch = input.match(/(?:invoice|inv)[#\s]*([A-Z0-9-]+)/i)
-        const dateMatch = input.match(/(?:date)[:\s]*([0-9\/\-]+)/i)
-        const amountMatch = input.match(/(?:total|amount)[:\s]*\$?([0-9,\.]+)/i)
-        const clientMatch = input.match(/(?:client|customer|to)[:\s]*([A-Za-z\s]+)/i)
-
-        extractedData = {
-          invoiceNumber: invoiceNumberMatch ? invoiceNumberMatch[1] : 'INV-001',
-          date: dateMatch ? dateMatch[1] : new Date().toLocaleDateString(),
-          amount: amountMatch ? parseFloat(amountMatch[1].replace(/,/g, '')) : 0,
-          client: clientMatch ? clientMatch[1].trim() : 'Client Name'
-        }
+      if (!validation.isValid) {
+        onProcessingError(jobId)
+        toast({
+          title: "Data validation failed",
+          description: validation.errors[0] || "The input data doesn't match the selected template",
+          variant: "destructive"
+        })
+        return
       }
 
       onDataExtracted(extractedData, jobId)
-      toast({
-        title: "Data extracted successfully",
-        description: `Processed ${fileName} and populated ${selectedTemplate} template`
-      })
+      
+      // Show validation feedback
+      if (validation.warnings.length > 0) {
+        toast({
+          title: "Data extracted with warnings",
+          description: `Confidence: ${Math.round(validation.confidence)}% - ${validation.warnings[0]}`,
+          variant: "default"
+        })
+      } else {
+        toast({
+          title: "Data extracted successfully",
+          description: `Confidence: ${Math.round(validation.confidence)}% - Processed ${fileName}`,
+        })
+      }
     } catch (error) {
       onProcessingError(jobId)
       toast({
@@ -144,6 +143,39 @@ export function DataInputZone({
         </CardTitle>
       </CardHeader>
       <CardContent>
+        {/* Validation Feedback */}
+        {validationResult && (
+          <div className="mb-4 space-y-2">
+            {validationResult.errors.length > 0 && (
+              <Alert variant="destructive">
+                <AlertTriangle className="h-4 w-4" />
+                <AlertDescription>
+                  <strong>Validation Error:</strong> {validationResult.errors[0]}
+                </AlertDescription>
+              </Alert>
+            )}
+            
+            {validationResult.warnings.length > 0 && validationResult.isValid && (
+              <Alert>
+                <Info className="h-4 w-4" />
+                <AlertDescription>
+                  <strong>Warning:</strong> {validationResult.warnings[0]}
+                  <div className="text-xs mt-1">Confidence: {Math.round(validationResult.confidence)}%</div>
+                </AlertDescription>
+              </Alert>
+            )}
+            
+            {validationResult.suggestions.length > 0 && (
+              <Alert>
+                <CheckCircle className="h-4 w-4" />
+                <AlertDescription>
+                  <strong>Suggestion:</strong> {validationResult.suggestions[0]}
+                </AlertDescription>
+              </Alert>
+            )}
+          </div>
+        )}
+
         <Tabs defaultValue="upload" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="upload">Upload File</TabsTrigger>

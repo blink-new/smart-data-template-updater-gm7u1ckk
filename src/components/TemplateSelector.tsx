@@ -10,18 +10,18 @@ interface TemplateSelectorProps {
 
 const templates = [
   {
-    id: 'financial-statement',
-    name: 'Financial Statement',
-    description: 'Income statement with revenue, costs, and profit metrics',
+    id: 'comprehensive-financial',
+    name: 'Comprehensive Financial Statements',
+    description: 'Full financial statements with income, balance sheet, cash flow & notes',
     icon: BarChart3,
     color: 'bg-blue-100 text-blue-600'
   },
   {
-    id: 'invoice',
-    name: 'Invoice Template',
-    description: 'Professional invoice with client details and amounts',
-    icon: Receipt,
-    color: 'bg-green-100 text-green-600'
+    id: 'financial-statement',
+    name: 'Income Statement',
+    description: 'Income statement with revenue, costs, and profit metrics',
+    icon: BarChart3,
+    color: 'bg-indigo-100 text-indigo-600'
   },
   {
     id: 'balance-sheet',
@@ -29,6 +29,13 @@ const templates = [
     description: 'Assets, liabilities, and equity overview',
     icon: FileText,
     color: 'bg-purple-100 text-purple-600'
+  },
+  {
+    id: 'invoice',
+    name: 'Invoice Template',
+    description: 'Professional invoice with client details and amounts',
+    icon: Receipt,
+    color: 'bg-green-100 text-green-600'
   },
   {
     id: 'employee-report',

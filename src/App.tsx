@@ -22,7 +22,7 @@ export interface ProcessingJob {
 }
 
 function App() {
-  const [selectedTemplate, setSelectedTemplate] = useState<string>('financial-statement')
+  const [selectedTemplate, setSelectedTemplate] = useState<string>('comprehensive-financial')
   const [extractedData, setExtractedData] = useState<ExtractedData>({})
   const [processingJobs, setProcessingJobs] = useState<ProcessingJob[]>([])
   const [isProcessing, setIsProcessing] = useState(false)
